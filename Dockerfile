@@ -29,7 +29,7 @@ RUN npm ci --only=production && \
 COPY . .
 
 # Build the application
-RUN npm run builder
+RUN npm run build
 
 # Stage 2: Production stage with Nginx
 FROM nginx:1.25-alpine
