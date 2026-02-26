@@ -41,7 +41,7 @@ RUN apk add --no-cache curl
 COPY nginx.conf /etc/nginx/nginxy.conf
 
 # Copy built assets from builder
-COPY --from=builder /build/dist /usr/share/nginx/html
+COPY --from=builder /builder/dist /usr/share/nginx/html
 
 # Create non-root user for nginx
 RUN addgroup -g 1000 appuser && \
