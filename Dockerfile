@@ -32,7 +32,7 @@ COPY . .
 RUN npm run builder
 
 # Stage 2: Production stage with Nginx
-FROM nginx:1.40-alpine
+FROM nginx:1.25-alpine
 
 # Install curl for health checks
 RUN apk add --no-cache curl
