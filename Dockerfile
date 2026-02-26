@@ -18,7 +18,7 @@ LABEL org.opencontainers.image.created="${BUILD_DATE}" \
       org.opencontainers.image.licenses="MIT"
 
 # Set working directory
-WORKDIR /build
+WORKDIR /builder
 
 # Install dependencies
 COPY package*.json ./
@@ -41,7 +41,7 @@ RUN apk add --no-cache curl
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copy built assets from builder
-COPY --from=builder /build/dist /usr/share/nginx/html
+COPY --from=builder /builder/dist /usr/share/nginx/html
 
 # Create non-root user for nginx
 RUN addgroup -g 1000 appuser && \
@@ -64,4 +64,5 @@ EXPOSE 80
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
+
 
