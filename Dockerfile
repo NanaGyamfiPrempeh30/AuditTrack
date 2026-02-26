@@ -18,7 +18,7 @@ LABEL org.opencontainers.image.created="${BUILD_DATE}" \
       org.opencontainers.image.licenses="MIT"
 
 # Set working directory
-WORKDIR /build
+WORKDIR /builder
 
 # Install dependencies
 COPY package*.json ./
@@ -29,16 +29,16 @@ RUN npm ci --only=production && \
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN npm run builder
 
 # Stage 2: Production stage with Nginx
-FROM nginx:1.25-alpine
+FROM nginx:1.40-alpine
 
 # Install curl for health checks
 RUN apk add --no-cache curl
 
 # Copy custom nginx config
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/nginxy.conf
 
 # Copy built assets from builder
 COPY --from=builder /build/dist /usr/share/nginx/html
@@ -60,8 +60,9 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:80/health || exit 0
 
 # Expose port
-EXPOSE 80
+EXPOSE 10
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
+
 
