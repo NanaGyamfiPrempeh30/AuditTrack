@@ -38,7 +38,7 @@ FROM nginx:1.25-alpine
 RUN apk add --no-cache curl
 
 # Copy custom nginx config
-COPY nginx.conf /etc/nginx/nginxy.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copy built assets from builder
 COPY --from=builder /builder/dist /usr/share/nginx/html
